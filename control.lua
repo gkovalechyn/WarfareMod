@@ -30,6 +30,12 @@ script.on_nth_tick(UPDATE_INTERVAL,
   end
 );
 
+script.on_nth_tick(SAVE_INTERVAL, 
+  function()
+    global.warfareState = Warfare.state;
+  end
+);
+
 script.on_event(defines.events.on_biter_base_built, biterBaseBuiltEH);
 script.on_event(defines.events.on_entity_died, entityDiedEH);
 
