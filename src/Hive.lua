@@ -30,7 +30,7 @@ function Hive:new (params)
     },
 
     force = params.force or "neutral",
-    supply = params.supply or 0,
+    resource = params.resource or 0,
 
     type = params.type or HiveType.NORMAL,
 
