@@ -136,58 +136,59 @@ function SendScoutingPartyAction:update(hive)
 end
 
 function SendScoutingPartyAction:applyResult(planner, hive)
-  local chunkToIndex = Chunk.get_index(hive.hiveBuilding.surface, self.chunkTo);
-  --Add the chunk we just explored to the known chunks
-  hive.knownChunks[chunkToIndex] = self.chunkTo;
+  if (action.result == ActionResult.SUCCESS) then
+    local chunkToIndex = Chunk.get_index(hive.hiveBuilding.surface, self.chunkTo);
+    --Add the chunk we just explored to the known chunks
+    hive.knownChunks[chunkToIndex] = self.chunkTo;
 
-  hive:returnGroup(self.unitGroup);
+    hive:returnGroup(self.unitGroup);
 
-  --Remove the chunk we just explored from the boundary
-  planner.state.boundary[chunkToIndex] = nil;
+    --Remove the chunk we just explored from the boundary
+    planner.state.boundary[chunkToIndex] = nil;
 
-  local up = {
-    x = self.chunkTo.x,
-    y = self.chunkTo.y - 1
-  }
-  local upIndex = Chunk.get_index(hive.hiveBuilding.surface, up);
+    local up = {
+      x = self.chunkTo.x,
+      y = self.chunkTo.y - 1
+    }
+    local upIndex = Chunk.get_index(hive.hiveBuilding.surface, up);
 
-  local down = {
-    x = self.chunkTo.x,
-    y = self.chunkTo.y + 1
-  }
-  local downIndex = Chunk.get_index(hive.hiveBuilding.surface, down);
+    local down = {
+      x = self.chunkTo.x,
+      y = self.chunkTo.y + 1
+    }
+    local downIndex = Chunk.get_index(hive.hiveBuilding.surface, down);
 
-  local left = {
-    x = self.chunkTo.x - 1,
-    y = self.chunkTo.y
-  }
-  local leftIndex = Chunk.get_index(hive.hiveBuilding.surface, left);
+    local left = {
+      x = self.chunkTo.x - 1,
+      y = self.chunkTo.y
+    }
+    local leftIndex = Chunk.get_index(hive.hiveBuilding.surface, left);
 
-  local right = {
-    x = self.chunkTo.x + 1,
-    y = self.chunkTo.y
-  }
-  local rightIndex = Chunk.get_index(hive.hiveBuilding.surface, right);
+    local right = {
+      x = self.chunkTo.x + 1,
+      y = self.chunkTo.y
+    }
+    local rightIndex = Chunk.get_index(hive.hiveBuilding.surface, right);
 
-  --Add the chunks that are around the one we just explored to the boundary
-  if (hive.knownChunks[upIndex] == nil) then
-    Debug.log("SendScoutingPartyAction::applyAction - Adding up chunk to the boundary - " .. serpent.line(up));
-    planner:addChunkToBoundary(upIndex, up);
-  end
+    --Add the chunks that are around the one we just explored to the boundary
+    if (hive.knownChunks[upIndex] == nil) then
+      Debug.log("SendScoutingPartyAction::applyAction - Adding up chunk to the boundary - " .. serpent.line(up));
+      planner:addChunkToBoundary(upIndex, up);
+    end
 
-  if (hive.knownChunks[downIndex] == nil) then
-    Debug.log("SendScoutingPartyAction::applyAction - Adding up chunk to the boundary - " .. serpent.line(down));
-    planner:addChunkToBoundary(downIndex, down);
-  end
+    if (hive.knownChunks[downIndex] == nil) then
+      Debug.log("SendScoutingPartyAction::applyAction - Adding up chunk to the boundary - " .. serpent.line(down));
+      planner:addChunkToBoundary(downIndex, down);
+    end
 
-  if (hive.knownChunks[leftIndex] == nil) then
-    Debug.log("SendScoutingPartyAction::applyAction - Adding up chunk to the boundary - " .. serpent.line(left));
-    planner:addChunkToBoundary(leftIndex, left);
-  end
+    if (hive.knownChunks[leftIndex] == nil) then
+      Debug.log("SendScoutingPartyAction::applyAction - Adding up chunk to the boundary - " .. serpent.line(left));
+      planner:addChunkToBoundary(leftIndex, left);
+    end
 
-  if (hive.knownChunks[rightIndex] == nil) then
-    Debug.log("SendScoutingPartyAction::applyAction - Adding up chunk to the boundary - " .. serpent.line(right));
-    planner:addChunkToBoundary(rightIndex, right);
-  end
-
+    if (hive.knownChunks[rightIndex] == nil) then
+      Debug.log("SendScoutingPartyAction::applyAction - Adding up chunk to the boundary - " .. serpent.line(right));
+      planner:addChunkToBoundary(rightIndex, right);
+    end
+  end -- "result == success"
 end
