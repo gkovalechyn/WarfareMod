@@ -5,8 +5,8 @@ function HiveChunkData:new (params)
   params = params or {};
 
   return setmetatable({
-    owner = params.owner, -- Hive
-    ownerForce = params.ownerForce -- The force of whoever owns the chunk
+    owner = params.owner or nil, -- Hive
+    ownerForce = params.ownerForce or "neutral" -- The force of whoever owns the chunk
   }, HiveChunkData)
 end
 
